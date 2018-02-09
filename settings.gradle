@@ -1,0 +1,12 @@
+rootProject.name = "jcloudobjects"
+
+include "applications:homeandauth"
+include "applications:channel-gateway"
+include "applications:channel-discovery"
+
+include "domain:core"
+
+include "domain:user:user-domain"
+include "domain:user:user-auth-pg"
+
+

@@ -1,0 +1,42 @@
+
+version "1.0-SNAPSHOT"
+
+
+
+dependencies {
+
+//    compileOnly 'org.projectlombok:lombok'
+
+    compile project(':domain:core')
+
+
+
+//    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka', version: '1.4.2.RELEASE'
+//    compile 'net.devh:grpc-server-spring-boot-starter:1.3.0.RELEASE'
+
+
+
+
+}
+
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//
+//    }
+//}
+
+
+bootJar.enabled = false
+jar.enabled = true
+
+
+//
+//jar {
+//    manifest {
+//        attributes "Main-Class": "com.rs.tracks12ms.user.Tracks12DiscoveryService"
+//    }
+//    from {
+//        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+//    }
+//}

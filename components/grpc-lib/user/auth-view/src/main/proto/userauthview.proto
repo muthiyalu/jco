@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.rs.tracks12ms.domain.user.authview";
+option java_outer_classname = "UserAuthViewProto";
+option objc_class_prefix = "HLW";
+
+package com.rs.tracks12ms.domain.user.authview;
+
+// The greeting service definition.
+service UserSrvcAuthView {
+    // Sends a greeting
+    rpc addUser (UserAuthRequest) returns (UserAuthView) {
+    }
+
+    rpc searchUserByName (UserAuthQuery) returns (UserAuthView) {
+    }
+}
+
+// The request message containing the user's name.
+message UserAuthQuery{
+    string name = 1;
+}
+
+// The request message containing the user's name.
+message UserAuthRequest {
+    string name = 1;
+}
+
+// The response message containing the greetings
+message UserAuthView {
+    string message = 1;
+}

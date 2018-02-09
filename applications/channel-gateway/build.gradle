@@ -1,0 +1,33 @@
+
+version "1.0-SNAPSHOT"
+
+
+ext {
+    springCloudVersion = 'Finchley.M5'
+}
+
+
+
+dependencies {
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-gateway', version: '2.0.0.M5'
+
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        mavenBom 'org.springframework.cloud:spring-cloud-gateway:2.0.0.M5'    }
+}
+
+
+
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.rs.tracks12ms.gateway.Tracks12GatewayService"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

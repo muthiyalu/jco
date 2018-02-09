@@ -1,0 +1,88 @@
+version: '2'
+services:
+  main-spring-service:
+    image: registry.gitlab.com/id/project/springsrvc:latest
+    environment:
+      PROJ_ENV: DEV
+      REDIS_SERVER: REDIS_SERVER
+      MONGODB_URI:
+      MICROSOFT_GRAPH_CLIENT_ID:
+      MICROSOFT_GRAPH_CLIENT_SECRET:
+      GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID
+      GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET
+      SESSION_SECRET: SESSION_SECRET
+    stdin_open: true
+    external_links:
+    - data-layer/mlabs-mongdb-dev:MONGO_URI
+    - data-layer/redis-session:REDIS_SERVER
+    volumes:
+    - /srv/jco/springsrvc:/usr/src/app
+    tty: true
+    ports:
+    - 9998:8080/tcp
+    labels:
+      traefik.frontend.rule: PathStrip:/welcome
+      traefik.port: '2369'
+      io.rancher.container.pull_image: always
+  main-service:
+    image: registry.gitlab.com/id/project:latest
+    environment:
+      PROJ_ENV: DEV
+      REDIS_SERVER: REDIS_SERVER
+      MONGODB_URI:
+      MICROSOFT_GRAPH_CLIENT_ID:
+      MICROSOFT_GRAPH_CLIENT_SECRET:
+      GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID
+      GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET
+      SESSION_SECRET: SESSION_SECRET
+    stdin_open: true
+    external_links:
+    - data-layer/mlabs-mongdb-dev:MONGO_URI
+    - data-layer/redis-session:REDIS_SERVER
+    volumes:
+    - /srv/nfs/main_srvc:/usr/src/app
+    tty: true
+    ports:
+    - 3001:3000/tcp
+    - 9229:9229/tcp
+    labels:
+      traefik.frontend.rule: PathStrip:/welcome
+      traefik.port: '2369'
+      io.rancher.container.pull_image: always
+  login:
+    image: registry.gitlab.com/id/project:latest
+    environment:
+      PROJ_ENV: DEV
+      REDIS_SERVER: REDIS_SERVER
+      MONGODB_URI:
+      MICROSOFT_GRAPH_CLIENT_ID:
+      MICROSOFT_GRAPH_CLIENT_SECRET:
+      GOOGLE_CLIENT_ID: GOOGLE_CLIENT_ID
+      GOOGLE_CLIENT_SECRET: GOOGLE_CLIENT_SECRET
+    stdin_open: true
+    external_links:
+    - data-layer/redis-session:REDIS_SERVER
+    - data-layer/mlabs-mongdb-dev:MONGO_URI
+    volumes:
+    - /srv/nfs/login:/usr/src/app
+    tty: true
+    ports:
+    - 3000:3000/tcp
+    labels:
+      traefik.frontend.rule: PathStrip:/welcome
+      traefik.port: '2369'
+      io.rancher.container.pull_image: always
+  welcome:
+    image: registry.gitlab.com/id/project:latest
+    environment:
+      PROJ_ENV: DEV
+    stdin_open: true
+    volumes:
+    - /srv/nfs:/usr/src/app
+    tty: true
+    ports:
+    - 2369:8080/tcp
+    labels:
+      traefik.frontend.rule: PathStrip:/welcome
+      traefik.port: '2369'
+      io.rancher.container.pull_image: always
